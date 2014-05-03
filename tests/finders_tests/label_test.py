@@ -31,3 +31,9 @@ class LabelFinderTestCase(TestCase):
             '//*[@id=../label[@class="someclass" and '
             'lower-case(normalize-space(text()))="Sign In"]/@for]'
         )
+
+    def test_should_generate_xpath_for_descendent(self):
+        finder = label.LabelFinder('Sign In').descendent('test')
+        finder.to_xpath() | should | equal_to(
+            '//*[@id=../label[lower-case(normalize-space(text()))="Sign In"]/@for]/test'
+        )

@@ -23,3 +23,9 @@ class TextFinderTestCase(TestCase):
         finder.to_xpath() | should | equal_to(
             '//*[@class="someclass" and lower-case(normalize-space(text()))="Sign In"]'
         )
+
+    def test_should_generate_xpath_for_descendent(self):
+        finder = text.TextFinder('Sign In').descendent('test')
+        finder.to_xpath() | should | equal_to(
+            '//*[lower-case(normalize-space(text()))="Sign In"]/test'
+        )
