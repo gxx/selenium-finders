@@ -1,12 +1,14 @@
 from itertools import chain
 
+from selenium_finders import XPath
+
 
 PATH_ANYWHERE = '//'
 PATH_PARENT = '../'
 PATH_DIRECT_DESCENDENT = '/'
 
 
-class Finder(object):
+class Finder(XPath):
     def __init__(self, tag_name='*', attributes=None, path=None):
         self.tag_name = tag_name
         self.path = path or PATH_ANYWHERE
@@ -15,13 +17,16 @@ class Finder(object):
     def get_extra_attributes(self):
         return []
 
-    def get_xpath_attributes(self):
-        normalized_attributes = [
-            ('@{key}'.format(key=key), value) for key, value in self.attributes.iteritems()
-        ]
+    def get_normalized_attributes(self):
         return [
-            '{attribute}="{value}"'.format(attribute=key, value=value)
-            for key, value in chain(normalized_attributes, self.get_extra_attributes())
+            ('@{key}'.format(key=key), '"{value}"'.format(value=value))
+            for key, value in self.attributes.iteritems()
+        ]
+
+    def get_xpath_attributes(self):
+        return [
+            '{attribute}={value}'.format(attribute=key, value=value)
+            for key, value in chain(self.get_normalized_attributes(), self.get_extra_attributes())
         ]
 
     def to_xpath(self):
