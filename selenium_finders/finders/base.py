@@ -1,2 +1,0 @@
-class BaseFinder(object):
-    pass

@@ -21,5 +21,5 @@ class TextFinderTestCase(TestCase):
     def test_should_generate_xpath_for_attributes(self):
         finder = text.TextFinder('Sign In', tag_name='div', attributes={'class': 'someclass'})
         finder.to_xpath() | should | equal_to(
-            '//*[lower-case(normalize-space(text()))="Sign In" and class="someclass"]'
+            '//div[@class="someclass" and lower-case(normalize-space(text()))="Sign In"]'
         )
