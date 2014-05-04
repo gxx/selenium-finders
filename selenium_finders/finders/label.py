@@ -1,11 +1,13 @@
+from selenium_finders.finders.core import Finder
+from selenium_finders.finders.core import PATH_DIRECT_DESCENDENT
 from selenium_finders.finders.core import PATH_PARENT
 from selenium_finders.finders.text import TextFinder
 
 
-class LabelFinder(TextFinder):
+class UnwrappedLabelFinder(TextFinder):
     def __init__(self, name, tag_name='*', attributes=None, label_attributes=None, path=None):
         self.label_attributes = label_attributes
-        super(LabelFinder, self).__init__(
+        super(UnwrappedLabelFinder, self).__init__(
             name,
             tag_name=tag_name,
             attributes=attributes,
@@ -20,3 +22,21 @@ class LabelFinder(TextFinder):
             path=PATH_PARENT
         )
         return [('@id', label_finder.descendent('@for').to_xpath())]
+
+
+class WrappedLabelFinder(UnwrappedLabelFinder):
+    def to_xpath(self):
+        label_finder = TextFinder(
+            self.name,
+            tag_name='label',
+            attributes=self.label_attributes,
+        )
+        element_finder = Finder(
+            tag_name=self.tag_name,
+            attributes=self.attributes,
+            path=PATH_DIRECT_DESCENDENT
+        )
+        return '{label}{element}'.format(
+            label=label_finder.to_xpath(),
+            element=element_finder.to_xpath()
+        )
