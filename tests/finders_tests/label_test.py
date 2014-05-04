@@ -69,3 +69,38 @@ class WrappedLabelFinderTestCase(TestCase):
         finder.to_xpath() | should | equal_to(
             '//label[lower-case(normalize-space(text()))="Sign In"]/*/test'
         )
+
+
+class LabelFinderTestCase(TestCase):
+    def test_should_generate_xpath_for_name_only(self):
+        finder = label.LabelFinder('Sign In')
+        finder.to_xpath() | should | equal_to(
+            '//*[@id=../label[lower-case(normalize-space(text()))="Sign In"]/@for]'
+            '|//label[lower-case(normalize-space(text()))="Sign In"]/*'
+        )
+
+    def test_should_generate_xpath_for_tag_name(self):
+        finder = label.LabelFinder('Sign In', tag_name='div')
+        finder.to_xpath() | should | equal_to(
+            '//div[@id=../label[lower-case(normalize-space(text()))="Sign In"]/@for]'
+            '|//label[lower-case(normalize-space(text()))="Sign In"]/div'
+        )
+
+    def test_should_generate_xpath_for_attributes(self):
+        finder = label.LabelFinder('Sign In', attributes={'class': 'someclass'})
+        finder.to_xpath() | should | equal_to(
+            '//*[@class="someclass" and '
+            '@id=../label[lower-case(normalize-space(text()))="Sign In"]/@for]'
+            '|//label[lower-case(normalize-space(text()))="Sign In"]/*[@class="someclass"]'
+        )
+
+    def test_should_generate_xpath_for_label_attributes(self):
+        finder = label.LabelFinder('Sign In', label_attributes={'class': 'someclass'})
+        finder.to_xpath() | should | equal_to(
+            '//*[@id=../label[@class="someclass" and '
+            'lower-case(normalize-space(text()))="Sign In"]/@for]'
+            '|//label[@class="someclass" and lower-case(normalize-space(text()))="Sign In"]/*'
+        )
+    def test_should_not_generate_xpath_for_descendent(self):
+        finder = label.LabelFinder('Sign In')
+        (finder.descendent, 'test') | should | throw(ValueError)
