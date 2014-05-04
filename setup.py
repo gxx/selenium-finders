@@ -20,7 +20,10 @@ setup(
         'License :: Freely Distributable',
         'Programming Language :: Python :: 2.7',
     ],
-    install_requires=[],
+    # TODO: determine if this should be in a requirements.txt
+    install_requires=[
+        'selenium==2.41.0',
+    ],
     test_suite='tests',
     tests_require=[],
 )
