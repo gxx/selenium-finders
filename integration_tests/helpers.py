@@ -45,7 +45,7 @@ class LazyList(object):
 
 BROWSERS = LazyList(
     lambda: [
-        BrowserTestWrapper(Firefox()),
+        # BrowserTestWrapper(Firefox()),
         BrowserTestWrapper(PhantomJS()),
     ]
 )

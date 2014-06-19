@@ -5,9 +5,43 @@
         </title>
     </head>
     <body>
-        <label for="unwrapped-label">
-            This is a label
-        </label>
-        <input id="unwrapped-label" type="text" value="Unwrapped Label" />
+        <section>
+            <h1>
+                Test for unwrapped (classical) label
+            </h1>
+
+            <label for="unwrapped-label">
+                This is a label
+            </label>
+            <input id="unwrapped-label" type="text" value="Unwrapped Label" />
+        </section>
+
+        <section>
+            <h1>Wrapped Labels</h1>
+
+            <h2>Wrapped label with unnested Label</h2>
+            <label>
+                This is a label
+                <input class="wrapped-label" type="text" value="Unnested Wrapped Label" />
+            </label>
+
+            <h2>Wrapped label with nested Label version #1</h2>
+            <label>
+                <span>
+                    This is a label
+                </span>
+                <input class="wrapped-label" type="text" value="Nested Wrapped Label #1" />
+            </label>
+
+            <h2>Wrapped label with nested Label version #2</h2>
+            <label>
+                <div>
+                    <span>
+                        This is a label
+                    </span>
+                </div>
+                <input class="wrapped-label" type="text" value="Nested Wrapped Label #2" />
+            </label>
+        </section>
     </body>
 </html>

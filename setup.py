@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name='furl',
+    name='selenium-finders',
     version='0.0.1',
     author='Andrew Crosio',
     author_email='Andrew.Crosio@gmail.com',
@@ -23,6 +23,7 @@ setup(
     # TODO: determine if this should be in a requirements.txt
     install_requires=[
         'selenium==2.41.0',
+        'git+https://github.com/Andrew-Crosio/xpath-dsl.git@master#egg=xpath-dsl',
     ],
     test_suite='tests',
     tests_require=[],
